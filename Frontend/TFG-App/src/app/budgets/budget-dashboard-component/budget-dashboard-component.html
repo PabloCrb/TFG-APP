@@ -1,0 +1,36 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <div class="header-titles">
+      <h1>Gestión de Presupuestos - Mayo 2026</h1>
+      <p>Controle sus gastos por categoría y período</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-primary" (click)="addNewBudget()">+ NUEVO PRESUPUESTO</button>
+    </div>
+  </header>
+  <div class="overall-container">
+    <div class="overall-card">
+      <p class="overall-title">Presupuesto Total:</p>
+      <h2 class="overall-title">{{ totalBudget }}€</h2>
+    </div>
+    <div class="overall-card">
+      <p class="overall-title">Total Gastado:</p>
+      <h2 class="overall-title">
+        {{ totalSpent }}€
+        <span id="percentage-spent"
+          >({{ (totalSpent / totalBudget) * 100 | number: '1.2-2' }}%)</span
+        >
+      </h2>
+    </div>
+    <div class="overall-card">
+      <p class="overall-title">Total Restante:</p>
+      <h2 class="overall-title">{{ remainingBudget }}€</h2>
+    </div>
+    <div class="overall-card">
+      <p class="overall-title">Estado General:</p>
+      <h2 id="overall-status" class="overall-title" [style.color]="statusColor">
+        {{ overallStatus }}
+      </h2>
+    </div>
+  </div>
+</div>

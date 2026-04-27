@@ -1,0 +1,13 @@
+.main-container {
+  margin-left: 260px;
+  padding: 20px;
+  display: flex;
+}
+
+.budgets-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  background-color: white;
+  border-radius: 0 0 12px 12px;
+  gap: 10px;
+}

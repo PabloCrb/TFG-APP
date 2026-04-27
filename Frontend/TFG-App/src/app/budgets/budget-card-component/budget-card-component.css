@@ -1,0 +1,173 @@
+:host {
+  display: block;
+}
+
+.budget-card {
+  font-family: 'Poppins', sans-serif;
+  margin: 2em;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border-radius: 10%;
+  box-shadow: #2c3e50 0px 2px 8px;
+  width: 15em;
+  cursor: pointer;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: #f1f3f5;
+  color: #6b7280;
+  border: 0.5px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  overflow: hidden;
+  max-height: 60px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.category-icon {
+  color: #3f51b5;
+  font-size: 24px;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #4779aa;
+}
+
+.period {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #2c3e50;
+}
+
+.progress-container {
+  width: 100%;
+  height: 10px;
+  background-color: #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  transition: all 0.4s ease;
+  border-radius: 10px;
+}
+
+.progress-bar.green {
+  background-color: #2ecc71;
+}
+.progress-bar.orange {
+  background-color: #f39c12;
+}
+.progress-bar.red {
+  background-color: #e74c3c;
+}
+
+.card-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-right {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.percentage {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.stat-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #95a5a6;
+  margin-bottom: 2px;
+}
+
+.stat-value {
+  color: #2c3e50;
+}
+
+.stat-value.negative {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 5px;
+  border-top: 1px solid #ecf0f1;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  color: #95a5a6;
+  transition: all 0.2s;
+}
+
+.icon-btn .material-icons {
+  font-size: 18px;
+}
+
+.edit-btn:hover {
+  background-color: #ebf5ff;
+  color: #3498db;
+}
+.delete-btn:hover {
+  background-color: #fdf2f2;
+  color: #e74c3c;
+}

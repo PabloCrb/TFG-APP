@@ -1,0 +1,95 @@
+.card-container {
+  width: 13em;
+  height: auto;
+  margin: 1em;
+  flex: 0 0 280px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 12px;
+  border: 0.5px solid #e5e7eb;
+  background: white;
+  padding: 20px 22px;
+  cursor: pointer;
+  transition:
+    transform 0.18s,
+    border-color 0.18s,
+    background 0.18s;
+}
+
+.card-container:hover {
+  transform: translateY(-2px);
+  border-color: #d1d5db;
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-row + .card-row {
+  margin-top: 20px;
+}
+
+.card-name {
+  font-size: 18px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.card-type-badge {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: #f1f3f5;
+  color: #6b7280;
+  border: 0.5px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.card-number {
+  font-size: 16px;
+  color: #9ca3af;
+  letter-spacing: 0.08em;
+}
+
+.card-balance {
+  font-size: 20px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+/* ── Active state ── */
+.card-container.active {
+  border-color: #7f77dd;
+  background: #eeedfe;
+  transform: scale(1.03);
+}
+
+.card-container.active .card-name {
+  color: #3c3489;
+}
+
+.card-container.active .card-type-badge {
+  background: #dddaf8;
+  color: #534ab7;
+  border-color: #afa9ec;
+}
+
+.card-container.active .card-number {
+  color: #7f77dd;
+}
+
+.card-container.active .card-balance {
+  color: #3c3489;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .card-container {
+    flex: 0 0 230px;
+  }
+
+  .card-balance {
+    font-size: 17px;
+  }
+}

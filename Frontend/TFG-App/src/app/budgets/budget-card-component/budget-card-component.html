@@ -1,0 +1,70 @@
+<div class="card budget-card" (click)="viewBudgetTransactions()">
+  <div class="card-header">
+    <div class="category-info">
+      <h3>{{ budget.label }}</h3>
+    </div>
+    @if (budget.start_date) {
+      <span class="period">
+        {{ _formatterService.formatDateToNumberMonth(budget.start_date) }} -
+        {{
+          _formatterService.formatDateToNumberMonth(
+            calculateEndDate(budget.start_date, budget.period_type)
+          )
+        }}</span
+      >
+    }
+  </div>
+
+  <div class="progress-container">
+    <div
+      class="progress-bar"
+      [style.width.%]="progressPercentage"
+      [style.background-color]="progressBarColor"
+    ></div>
+  </div>
+
+  <div class="card-stats">
+    <div class="stats-row">
+      <div class="stat-left">
+        <span class="stat-label">Gastado / Límite</span>
+        <span class="stat-value">
+          <strong>{{ budget.spent }}€</strong>
+          / {{ budget.amount }}€
+        </span>
+      </div>
+
+      <div class="stat-right">
+        <span class="percentage">{{ progressPercentage.toFixed(2) }}%</span>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <span class="stat-label">Restante</span>
+
+      <div class="stat-right">
+        <b
+          ><span class="stat-value">{{ remaining }}€</span></b
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="categories-container">
+    @for (label of transaction_type_labels; track label) {
+      <span class="badge">
+        {{ label }}
+      </span>
+    }
+  </div>
+
+  @if (budget.budget_id) {
+    <div class="card-actions">
+      <button class="icon-btn edit-btn" (click)="editBudget($event)">
+        <span class="material-icons">✏️</span>
+      </button>
+      <button class="icon-btn delete-btn" (click)="deleteBudget($event)">
+        <span class="material-icons">🗑️</span>
+      </button>
+    </div>
+  }
+</div>

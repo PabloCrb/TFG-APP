@@ -1,0 +1,124 @@
+:host {
+  --primary-color: #2c3e50;
+  --accent-color: #3498db;
+  --bg-sidebar: #ffffff;
+  --text-main: #2c3e50;
+  --text-muted: #95a5a6;
+  --hover-bg: #f8fafd;
+}
+
+.sidebar {
+  width: 260px;
+  height: 95vh;
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid #eef2f6;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 0 25px 40px;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--accent-color);
+  border-radius: 8px;
+}
+
+.logo h2 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.logo h2 span {
+  color: var(--accent-color);
+}
+
+/* Enlaces de Navegación */
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.nav-links li {
+  display: flex;
+  align-items: center;
+  padding: 14px 25px;
+  margin: 4px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+  gap: 15px;
+}
+
+.nav-links li:hover {
+  background-color: var(--hover-bg);
+  color: var(--accent-color);
+}
+
+.nav-links li.active {
+  background-color: #ebf5ff;
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+/* Placeholder para Iconos (puedes reemplazarlos con SVG o Icon Fonts) */
+.icon-placeholder {
+  width: 20px;
+  height: 20px;
+  background-color: currentColor;
+  opacity: 0.5;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+}
+
+/* Footer con Perfil de Usuario */
+.sidebar-footer {
+  padding: 20px 25px;
+  border-top: 1px solid #f1f1f1;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: #dfe6e9;
+  border-radius: 50%;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.user-role {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}

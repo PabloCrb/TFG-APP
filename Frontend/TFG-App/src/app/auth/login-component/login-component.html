@@ -1,0 +1,16 @@
+<div class="login-container">
+  <!-- Imagen izquierda -->
+  <div class="login-left"></div>
+
+  <!-- Formulario derecho -->
+  <div class="login-right">
+    <h2 style="font-family: Poppins">Inicio de sesión</h2>
+
+    <app-form-template
+      [submitButtonText]="'Iniciar sesión'"
+      [config]="formConfig"
+      (formSubmit)="login($event)"
+    />
+    <p id="noAccountText">¿No tiene una cuenta? <a href="/register">Regístrese aquí</a></p>
+  </div>
+</div>

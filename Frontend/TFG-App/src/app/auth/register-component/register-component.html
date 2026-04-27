@@ -1,0 +1,43 @@
+<div class="register-container">
+  @if (showFormRegister == null) {
+    <!-- MÉTODOS DE REGISTRO -->
+    <div class="methodRegister-container">
+      <img id="logo" src="/images/logo.png" alt="Logo de la aplicación" />
+      <p id="registerText">Registro de usuario</p>
+
+      <button class="methodRegister-button-black" (click)="showEmailRegisterForm()">
+        Con correo electrónico
+      </button>
+
+      <button class="methodRegister-button">Con cuenta de Google</button>
+      <button class="methodRegister-button">Con cuenta de Facebook</button>
+
+      <p id="termsAndConditions">
+        Al registrarte, aceptas nuestros <a href="/terms">Términos y Condiciones</a> y nuestra
+        <a href="/privacy">Política de Privacidad</a>.
+      </p>
+
+      <p id="alreadyHaveAnAccount">¿Ya tiene una cuenta? <a href="/">Inicie sesión aquí</a></p>
+    </div>
+  } @else if (showFormRegister == ShowFormRegister.EMAIL) {
+    <!-- FORMULARIO EMAIL -->
+    <div class="emailRegister-container">
+      <button class="back-button" (click)="showFormRegister = null">
+        <svg class="svgIcon" viewBox="0 0 384 512">
+          <path
+            d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
+          ></path>
+        </svg>
+      </button>
+      <p id="registerText">Registro con correo</p>
+
+      <app-form-template
+        [form]="form"
+        [submitButtonText]="'Crear cuenta'"
+        [config]="formConfig"
+        (formSubmit)="registerWithEmail($event)"
+      >
+      </app-form-template>
+    </div>
+  }
+</div>

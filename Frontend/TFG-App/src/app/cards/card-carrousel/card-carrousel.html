@@ -1,0 +1,23 @@
+<div id="card-container">
+  <div id="title-and-add-button">
+    <h2 id="my-cards">Mis Tarjetas</h2>
+    <button id="add-card-button" (click)="showCreateCardForm()" title="Añadir tarjeta">+</button>
+  </div>
+  <div id="carrousel-container">
+    @if (!cards || cards.length === 0) {
+      <p class="no-cards">No tiene tarjetas registradas</p>
+    } @else {
+      @for (card of cards; track card.card_id) {
+        <app-card-component
+          [cardId]="card.card_id"
+          [cardName]="card.name"
+          [cardType]="card.type"
+          [cardNumber]="'**** ' + card.number.slice(-4)"
+          [cardBalance]="card.balance + '€'"
+          [isActive]="card.isActive"
+          (selectCardEvent)="onSelectCard($event)"
+        ></app-card-component>
+      }
+    }
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<nav class="sidebar">
+  <div class="logo">
+    <div class="logo-icon"></div>
+    <h2>Finanzas <span>TFG</span></h2>
+  </div>
+
+  <ul class="nav-links">
+    @for (item of menuItems; track item.value) {
+      <li [class.active]="item.active" (click)="seleccionarItem(item)">
+        <div class="icon-placeholder"></div>
+        <span>{{ item.label }}</span>
+      </li>
+    }
+  </ul>
+
+  <div class="sidebar-footer">
+    <div class="user-profile">
+      <div class="avatar"></div>
+      <div class="user-info">
+        <span class="user-name">Test</span>
+      </div>
+    </div>
+  </div>
+</nav>

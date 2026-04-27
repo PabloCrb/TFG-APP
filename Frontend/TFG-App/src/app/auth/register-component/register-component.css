@@ -1,0 +1,120 @@
+.register-container,
+.methodRegister-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-container {
+  background-image: url('/images/bg_auth.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  z-index: 1;
+}
+
+.methodRegister-container,
+.emailRegister-container {
+  z-index: 2;
+  background-color: #f2f2f2;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 40%;
+}
+
+#logo {
+  border-radius: 100%;
+  width: 150px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.methodRegister-button,
+.methodRegister-button-black {
+  width: 416px;
+  height: 64px;
+  border-radius: 40px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin-bottom: 1em;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.methodRegister-button,
+.methodRegister-button-black,
+#registerText {
+  font-family: 'Poppins', sans-serif;
+}
+
+#registerText {
+  font-size: 2rem;
+  color: #111111;
+}
+
+.methodRegister-button-black {
+  background: #111111;
+  color: #f2f2f2;
+}
+
+.emailRegister-container {
+  width: 50%;
+}
+
+.back-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 0px 4px rgba(180, 160, 255, 0.253);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+}
+
+.svgIcon {
+  transform: rotate(-90deg);
+  width: 12px;
+  transition-duration: 0.3s;
+}
+
+.svgIcon path {
+  fill: white;
+}
+
+.back-button:hover {
+  width: 140px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
+  background: #111111;
+  align-items: center;
+}
+
+.back-button:hover .svgIcon {
+  transition-duration: 0.3s;
+  transform: translateY(-200%);
+}
+
+.back-button::before {
+  position: absolute;
+  bottom: -20px;
+  content: 'Volver';
+  color: white;
+  font-size: 0px;
+}
+
+.back-button:hover::before {
+  font-size: 13px;
+  opacity: 1;
+  bottom: unset;
+  transition-duration: 0.3s;
+}

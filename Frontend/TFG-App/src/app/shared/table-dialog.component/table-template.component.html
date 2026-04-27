@@ -1,0 +1,73 @@
+<div class="table-container">
+  @if (hasAddButton) {
+    <button class="add-rt bg-green" (click)="onAddRecurringTransaction(true)">
+      + Añadir Ingreso Recurrente
+    </button>
+    <button
+      id="add-recurring-expense"
+      class="add-rt bg-red"
+      (click)="onAddRecurringTransaction(false)"
+    >
+      - Añadir Gasto Recurrente
+    </button>
+  }
+  @if (titleLabel) {
+    <h2 class="table-title">{{ titleLabel }}</h2>
+  }
+  <table>
+    <thead>
+      <tr>
+        @for (col of columns; track col.key) {
+          <th>
+            {{ col.label }}
+          </th>
+        }
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @if (data.length === 0) {
+        <tr>
+          <td [attr.colspan]="columns.length" class="empty">No hay datos disponibles</td>
+        </tr>
+      }
+      @for (row of data; track row.rt_id) {
+        <tr>
+          @for (col of columns; track col.key) {
+            <td>
+              @switch (col.type) {
+                @case ('bold') {
+                  <strong>{{ row[col.key] }}</strong>
+                }
+                @case ('currency') {
+                  <span [class.positive]="row[col.key] > 0" [class.negative]="row[col.key] < 0">
+                    {{ row[col.key] > 0 ? '\u00A0' : '' }}{{ row[col.key] }}€
+                  </span>
+                }
+                @case ('badge') {
+                  <span class="badge-categoria">{{ row[col.key] }}</span>
+                }
+                @case ('date') {
+                  <span>{{ row[col.key].substring(0, 10) }}</span>
+                }
+                @case ('nullable') {
+                  <span [class.null-value]="!row[col.key]">
+                    {{ row[col.key] ? row[col.key].substring(0, 10) : (col.nullText ?? '—') }}
+                  </span>
+                }
+                @default {
+                  {{ row[col.key] }}
+                }
+              }
+            </td>
+          }
+          <td class="actions">
+            <button class="btn-icon edit" (click)="onEdit(row)">✏️</button>
+            <button class="btn-icon delete" (click)="onDelete(row)">🗑️</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,16 @@
+<div class="overlay" (click)="cerrar()">
+  <div
+    class="dialog"
+    [ngStyle]="dialogStyles"
+    [style.visibility]="dialogStyles ? 'visible' : 'hidden'"
+    (click)="$event.stopPropagation()"
+  >
+    @if (titulo) {
+      <h3>{{ titulo }}</h3>
+    }
+
+    <ng-container #contenedor></ng-container>
+
+    <button class="btn-cerrar" (click)="cancelar()">Cerrar</button>
+  </div>
+</div>

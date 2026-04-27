@@ -1,0 +1,74 @@
+.dashboard-container {
+  padding: 20px;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: white;
+  border-radius: 12px 12px 0 0;
+  width: 80vw;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #eef2f6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+.header-titles h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #2c3e50;
+}
+.header-titles p {
+  margin: 5px 0 0;
+  color: #95a5a6;
+}
+
+.header-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.btn-primary {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.overall-container {
+  margin: 0 0 0 1em;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14em, 1fr));
+  gap: 25px;
+  width: 80%;
+}
+.overall-card {
+  padding: 1em;
+  border-radius: 5%;
+  box-shadow: #2c3e50 0px 1px 5px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff;
+}
+
+.overall-title {
+  padding: 0;
+  margin: 0;
+}
+
+#percentage-spent {
+  align-items: top;
+  font-size: 0.7em;
+  color: #7f8c8d;
+}

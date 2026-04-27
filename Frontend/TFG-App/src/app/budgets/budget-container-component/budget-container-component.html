@@ -1,0 +1,40 @@
+<div class="main-container">
+  <app-sidebar></app-sidebar>
+  <div class="content-container">
+    <app-card-carrousel (selectedCardEvent)="onCardSelected($event)"></app-card-carrousel>
+    @if (isLoading) {
+      <p>Cargando...</p>
+    } @else if (budgets.length) {
+      <app-budget-dashboard-component
+        [totalBudget]="totalBudget"
+        [totalSpent]="totalSpent"
+        [remainingBudget]="totalBudget - totalSpent"
+        [overallStatus]="overallStatus"
+        (onCreateBudget)="addNewBudget()"
+      ></app-budget-dashboard-component>
+
+      <div class="budgets-container">
+        @for (budget of budgets; track budget.budget_id) {
+          @if (budget.budget_id === null) {
+            <app-budget-card-component
+              [budget]="budget"
+              (action)="onBudgetAction($event)"
+            ></app-budget-card-component>
+          } @else {
+            <app-budget-card-component
+              [budget]="budget"
+              (action)="onBudgetAction($event)"
+            ></app-budget-card-component>
+          }
+        }
+      </div>
+    } @else {
+      <app-budget-dashboard-component
+        [totalBudget]="0"
+        [totalSpent]="0"
+        [remainingBudget]="0"
+        [overallStatus]="'Sin presupuestos'"
+      ></app-budget-dashboard-component>
+    }
+  </div>
+</div>

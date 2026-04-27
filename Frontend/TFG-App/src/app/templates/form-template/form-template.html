@@ -1,0 +1,42 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()">
+  @for (field of config; track field.name) {
+    <div>
+      <label class="fieldLabel">{{ field.label }}</label>
+
+      @if (field.type === 'select' && field.options) {
+        @if (!field.multiple) {
+          <select
+            class="formInput"
+            [formControlName]="field.name"
+            [attr.multiple]="field.multiple ? true : null"
+          >
+            @for (option of field.options; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+        } @else {
+          <div class="chips-container">
+            @for (option of field.options; track $index) {
+              <div
+                class="chip"
+                [class.selected]="isSelected(field.name, option.value)"
+                (click)="toggleSelection(field.name, option.value)"
+              >
+                {{ option.label }}
+              </div>
+            }
+          </div>
+        }
+      } @else {
+        <input class="formInput" type="{{ field.type }}" [formControlName]="field.name" />
+      }
+    </div>
+    @if (getControl(field.name)?.touched && getControl(field.name)?.invalid) {
+      @for (error of getErrors(field.name); track error) {
+        <p id="errorText">* {{ field.errors?.[error] }}</p>
+      }
+    }
+  }
+
+  <button id="submitBtn" type="submit" [disabled]="form.invalid">{{ submitButtonText }}</button>
+</form>

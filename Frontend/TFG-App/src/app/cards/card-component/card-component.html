@@ -1,0 +1,10 @@
+<div class="card-container" (click)="emitSelectCardEvent()" [class.active]="isActive">
+  <div class="card-row">
+    <span class="card-name">{{ cardName }}</span>
+    <span class="card-type-badge">{{ cardType }}</span>
+  </div>
+  <div class="card-row">
+    <span class="card-number">{{ cardNumber }}</span>
+    <span class="card-balance">{{ cardBalance }}</span>
+  </div>
+</div>

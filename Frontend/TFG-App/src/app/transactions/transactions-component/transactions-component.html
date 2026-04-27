@@ -1,0 +1,83 @@
+<div class="transactions-container">
+  <div class="header-actions">
+    <h2>Movimientos recientes</h2>
+    <div class="buttons-container">
+      <button class="btn btn-recurrent" (click)="manageRecurringTransactions()">
+        ↻ Transacciones recurrentes
+      </button>
+      <button class="btn btn-income" (click)="registerTransaction(true)">+ Ingreso</button>
+      <button class="btn btn-expenses" (click)="registerTransaction(false)">+ Gasto</button>
+    </div>
+  </div>
+
+  <div class="secondary-actions">
+    <button class="btn-link" (click)="createTransactionType()">
+      + Crear categoría de transacción
+    </button>
+  </div>
+
+  <div class="filters-container">
+    <span class="filter-label">Periodo</span>
+    <select class="filter-date">
+      <option value="week">Esta semana</option>
+      <option value="month">Este mes</option>
+      <option value="year">Este año</option>
+    </select>
+    <span class="filter-label">Tipo</span>
+    <select class="filter-type">
+      <option value="">Todos</option>
+      <option value="ingreso">Ingresos</option>
+      <option value="gasto">Gastos</option>
+    </select>
+    <input
+      type="search"
+      class="filter-search"
+      placeholder="Buscar por nombre, tienda o concepto…"
+    />
+  </div>
+
+  <table class="transactions-table">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Descripción</th>
+        <th>Categoría</th>
+        <th>Importe</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (movements?.length === 0) {
+        <tr>
+          <td colspan="4" class="no-data">No hay transacciones para esta tarjeta</td>
+        </tr>
+      } @else {
+        @for (transaction of movements; track transaction.transaction_id) {
+          <tr>
+            <td>
+              <b>{{
+                this._formatterService.formatDateToNumberMonth(transaction.transaction_date)
+              }}</b>
+            </td>
+            <td>{{ transaction.description }}</td>
+            <td>
+              <span class="badge-cat">{{ transaction.type_label }}</span>
+            </td>
+            <td
+              class="actions-cell"
+              [ngClass]="transaction.amount > 0 ? 'monto-positivo' : 'monto-negativo'"
+            >
+              <span>{{ transaction.amount > 0 ? '\u00A0' : '' }}{{ transaction.amount }}€</span>
+              @if (transaction.recurring_id) {
+                <span>🔁</span>
+              }
+              <div class="actions">
+                <button class="icon-btn edit-btn" (click)="onEdit(transaction)">✏️</button>
+                <button class="icon-btn delete-btn" (click)="onDelete(transaction)">🗑️</button>
+              </div>
+            </td>
+          </tr>
+        }
+      }
+    </tbody>
+  </table>
+</div>

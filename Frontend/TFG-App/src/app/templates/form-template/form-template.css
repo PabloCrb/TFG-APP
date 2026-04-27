@@ -1,0 +1,93 @@
+.fieldLabel {
+  display: block;
+  font-family: Poppins, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #888;
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+
+.formInput {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: Poppins, sans-serif;
+  font-size: 15px;
+  color: #333;
+  background: #fafafa;
+  outline: none;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.formInput:focus {
+  border-color: #aaa;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+.formInput::placeholder {
+  color: #bbb;
+}
+
+#submitBtn {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 12px;
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-family: Poppins, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    opacity 0.15s,
+    transform 0.1s;
+}
+
+#submitBtn:hover {
+  opacity: 0.85;
+}
+#submitBtn:active {
+  transform: scale(0.98);
+}
+
+#errorText {
+  margin: -14px 0 16px;
+  font-size: 12px;
+  color: rgb(201, 27, 27);
+}
+
+.chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 6px 12px;
+  border-radius: 20px;
+  background-color: #eee;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.chip:hover {
+  background-color: #ddd;
+}
+
+.chip.selected {
+  background-color: #4caf50;
+  color: white;
+  background-color: #4caf50;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}

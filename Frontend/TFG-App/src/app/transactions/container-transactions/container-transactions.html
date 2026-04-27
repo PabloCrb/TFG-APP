@@ -1,0 +1,7 @@
+<div id="main-container">
+  <app-sidebar></app-sidebar>
+  <div id="transactions-container">
+    <app-card-carrousel (selectedCardEvent)="onCardSelected($event)"></app-card-carrousel>
+    <app-transactions-component (balanceUpdated)="onBalanceUpdate()"></app-transactions-component>
+  </div>
+</div>
