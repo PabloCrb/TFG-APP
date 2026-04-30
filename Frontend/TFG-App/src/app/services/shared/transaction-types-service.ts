@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { API_URL } from '../../constants';
 
 @Injectable({
   providedIn: 'root',
@@ -6,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class TransactionTypesService {
   async getTransactionTypes(isIncome: boolean): Promise<string[]> {
     const token = localStorage.getItem('token');
-    const response = await fetch(`http://localhost:3000/transactions/getTransactionTypes`, {
+    const response = await fetch(`${API_URL}/transactions/getTransactionTypes`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,

@@ -32,4 +32,8 @@ export class SidebarComponent {
     itemSeleccionado.active = true;
     this._router.navigate([`/${itemSeleccionado.value}`]);
   }
+
+  navigateToLogin() {
+    this._router.navigate([``]);
+  }
 }

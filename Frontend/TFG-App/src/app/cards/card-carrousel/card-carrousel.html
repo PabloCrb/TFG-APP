@@ -5,7 +5,9 @@
   </div>
   <div id="carrousel-container">
     @if (!cards || cards.length === 0) {
-      <p class="no-cards">No tiene tarjetas registradas</p>
+      <p class="no-cards">
+        No tiene tarjetas registradas. Cree una con el botón de la parte superior
+      </p>
     } @else {
       @for (card of cards; track card.card_id) {
         <app-card-component

@@ -10,7 +10,7 @@
         [totalSpent]="totalSpent"
         [remainingBudget]="totalBudget - totalSpent"
         [overallStatus]="overallStatus"
-        (onCreateBudget)="addNewBudget()"
+        (createBudget)="createBudget()"
       ></app-budget-dashboard-component>
 
       <div class="budgets-container">
@@ -34,6 +34,7 @@
         [totalSpent]="0"
         [remainingBudget]="0"
         [overallStatus]="'Sin presupuestos'"
+        (createBudget)="createBudget()"
       ></app-budget-dashboard-component>
     }
   </div>

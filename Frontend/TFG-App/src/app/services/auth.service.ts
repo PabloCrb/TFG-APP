@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import {API_URL} from '../constants';
+
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +9,7 @@ export class AuthService {
   constructor() {}
 
   async login(usernameOrEmail: string, password: string): Promise<{ ok: boolean; data: any }> {
-    const response = await fetch('http://localhost:3000/auth/login', {
+    const response = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,7 +35,7 @@ export class AuthService {
     email: string,
     password: string,
   ): Promise<{ ok: boolean; data: any }> {
-    const response = await fetch('http://localhost:3000/auth/registerWithEmail', {
+    const response = await fetch(`${API_URL}/auth/registerWithEmail`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

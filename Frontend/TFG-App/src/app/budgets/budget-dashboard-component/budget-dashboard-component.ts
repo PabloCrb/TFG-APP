@@ -28,19 +28,20 @@ export class BudgetDashboardComponent {
   @Input() remainingBudget!: number;
   @Input() overallStatus!: string;
 
-  @Output() onCreateBudget: EventEmitter<any> = new EventEmitter<any>();
+  @Output() createBudget: EventEmitter<void> = new EventEmitter<void>();
 
   form: FormGroup = new FormGroup({});
   cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
+  textDate: string = this._formatterService.formatDateToMonthYear(new Date());
 
   get statusColor(): string {
     if (this.overallStatus === 'Excedido') return 'red';
-    if (this.overallStatus === 'Aviso') return 'orange';
-    if (this.overallStatus === 'Normal') return 'green';
+    if (this.overallStatus === 'Cerca del límite') return 'orange';
+    if (this.overallStatus === 'Con margen') return 'green';
     return 'black';
   }
 
-  addNewBudget() {
-    this.onCreateBudget.emit();
+  emitCreateBudget() {
+    this.createBudget.emit();
   }
 }

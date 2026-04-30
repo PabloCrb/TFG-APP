@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Transaction } from '../interfaces/transaction-interface';
 import { RecurringTransaction } from '../interfaces/recurring-transaction-interface';
+import { API_URL } from '../constants';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class TransactionsService {
     transaction: Transaction,
   ): Promise<{ ok: boolean; data: any }> {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:3000/transactions/addTransaction', {
+    const response = await fetch(`${API_URL}/transactions/addTransaction`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -26,7 +27,7 @@ export class TransactionsService {
 
   async getTransactions(selectedCardID: number | null): Promise<{ ok: boolean; data: any[] }> {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:3000/transactions/getTransactions', {
+    const response = await fetch(`${API_URL}/transactions/getTransactions`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -39,7 +40,7 @@ export class TransactionsService {
 
   async deleteTransacion(transaction: Transaction) {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:3000/transactions/deleteTransaction', {
+    const response = await fetch(`${API_URL}/transactions/deleteTransaction`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -52,7 +53,7 @@ export class TransactionsService {
 
   async updateBalance(amount: number, cardID: number) {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:3000/transactions/updateBalance', {
+    const response = await fetch(`${API_URL}/transactions/updateBalance`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -65,7 +66,7 @@ export class TransactionsService {
 
   async editTransaction(transaction: Transaction) {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:3000/transactions/editTransaction', {
+    const response = await fetch(`${API_URL}/transactions/editTransaction`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -79,7 +80,7 @@ export class TransactionsService {
   async getRecurringUserTransactions(cardID: number) {
     const token = localStorage.getItem('token');
     const response = await fetch(
-      'http://localhost:3000/transactions/getRecurringUserTransactions',
+      `${API_URL}/transactions/getRecurringUserTransactions`,
       {
         method: 'POST',
         headers: {
@@ -94,7 +95,7 @@ export class TransactionsService {
 
   async addRecurringTransaction(rt: RecurringTransaction) {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:3000/transactions/addRecurringTransaction', {
+    const response = await fetch(`${API_URL}/transactions/addRecurringTransaction`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -107,7 +108,7 @@ export class TransactionsService {
 
   async editRecurringTransaction(rt: RecurringTransaction) {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:3000/transactions/editRecurringTransaction', {
+    const response = await fetch(`${API_URL}/transactions/editRecurringTransaction`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -120,7 +121,7 @@ export class TransactionsService {
 
   async deleteRecurringTransaction(rt: RecurringTransaction) {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:3000/transactions/deleteRecurringTransaction', {
+    const response = await fetch(`${API_URL}/transactions/deleteRecurringTransaction`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -133,7 +134,7 @@ export class TransactionsService {
 
   async createTransactionType(data: any) {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:3000/transactions/createTransactionType', {
+    const response = await fetch(`${API_URL}/transactions/createTransactionType`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,

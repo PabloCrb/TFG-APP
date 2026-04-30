@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -10,6 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './form-template.css',
 })
 export class FormTemplate implements OnInit {
+  _fb: FormBuilder = inject(FormBuilder);
+
   @Input() config: any[] = [];
   @Input() submitButtonText?: string;
   @Input() form!: FormGroup;
@@ -18,8 +20,6 @@ export class FormTemplate implements OnInit {
   @Output() formSubmit = new EventEmitter<any>();
 
   passwordVisible: Record<string, boolean> = {};
-
-  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
     const group: any = {};
@@ -30,7 +30,7 @@ export class FormTemplate implements OnInit {
       group[field.name] = [initialValue, this.mapValidators(field.validators)];
     });
 
-    this.form = this.fb.group(group);
+    this.form = this._fb.group(group);
 
     if (this.initialData) {
       this.config.forEach((field) => {

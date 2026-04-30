@@ -43,6 +43,8 @@ export class BudgetContainerComponent {
 
     this.budgets = await this._budgetsService.getUserBudgets(cardID);
 
+    console.log(JSON.stringify(this.budgets));
+
     for (const budget of this.budgets) {
       if (budget.budget_id === null) {
         othersBudget = budget;
@@ -67,9 +69,9 @@ export class BudgetContainerComponent {
     if (this.totalSpent >= this.totalBudget) {
       this.overallStatus = 'Excedido';
     } else if (this.totalSpent >= this.totalBudget * 0.8) {
-      this.overallStatus = 'Aviso';
+      this.overallStatus = 'Cerca del límite';
     } else {
-      this.overallStatus = 'Normal';
+      this.overallStatus = 'Con margen';
     }
   }
 
@@ -88,7 +90,7 @@ export class BudgetContainerComponent {
     }
   }
 
-  async addNewBudget() {
+  async createBudget() {
     const types = await this._transactionTypesService.getTransactionTypes(false);
 
     const result = await this._dialogService.openComponent(FormTemplate, {
@@ -231,6 +233,7 @@ export class BudgetContainerComponent {
     editedBudget.amount = result.amount;
     editedBudget.period_type = result.period_type;
     editedBudget.start_date = result.start_date;
+    editedBudget.card_id = this._selectedCardService.getSelectedCard();
     editedBudget.transaction_ids = result.transaction_ids;
 
     await this._budgetsService.editBudget(editedBudget);

@@ -28,7 +28,11 @@
           </div>
         }
       } @else {
-        <input class="formInput" type="{{ field.type }}" [formControlName]="field.name" />
+        @if (field.type === 'currency') {
+          <input class="formInput" type="text" [formControlName]="field.name" />
+        } @else {
+          <input class="formInput" type="{{ field.type }}" [formControlName]="field.name" />
+        }
       }
     </div>
     @if (getControl(field.name)?.touched && getControl(field.name)?.invalid) {
@@ -38,5 +42,5 @@
     }
   }
 
-  <button id="submitBtn" type="submit" [disabled]="form.invalid">{{ submitButtonText }}</button>
+  <button id="submitBtn" type="submit">{{ submitButtonText }}</button>
 </form>

@@ -1,11 +1,11 @@
 <div class="dashboard-container">
   <header class="dashboard-header">
     <div class="header-titles">
-      <h1>Gestión de Presupuestos - Mayo 2026</h1>
+      <h1>Gestión de Presupuestos - {{ textDate }}</h1>
       <p>Controle sus gastos por categoría y período</p>
     </div>
     <div class="header-actions">
-      <button class="btn btn-primary" (click)="addNewBudget()">+ NUEVO PRESUPUESTO</button>
+      <button class="btn btn-primary" (click)="emitCreateBudget()">+ NUEVO PRESUPUESTO</button>
     </div>
   </header>
   <div class="overall-container">

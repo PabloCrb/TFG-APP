@@ -1,9 +1,25 @@
 import { Injectable } from '@angular/core';
+import { API_URL } from '../../constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormatterService {
+  months = [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
+  ];
+
   formatDate(date: string | Date | undefined | null): string | null {
     if (date === null || date === undefined) return null;
     if (date instanceof Date) {
@@ -15,24 +31,9 @@ export class FormatterService {
   formatDateToNumberMonth(date: string | Date | undefined | null): string {
     if (date === null || date === undefined) return '';
 
-    const meses = [
-      'Ene',
-      'Feb',
-      'Mar',
-      'Abr',
-      'May',
-      'Jun',
-      'Jul',
-      'Ago',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dic',
-    ];
-
     const fecha = new Date(date);
     const dia = fecha.getDate();
-    const mes = meses[fecha.getMonth()];
+    const mes = this.months[fecha.getMonth()].substring(0, 3);
     return `${dia} ${mes}`;
   }
 
@@ -49,7 +50,7 @@ export class FormatterService {
   async formatTransactionTypeIDtoName(budgetID: string): Promise<string[]> {
     const token = localStorage.getItem('token');
     const response = await fetch(
-      `http://localhost:3000/transactions/getTransactionLabels?budgetID=${budgetID}`,
+      `${API_URL}/transactions/getTransactionLabels?budgetID=${budgetID}`,
       {
         method: 'GET',
         headers: {
@@ -63,5 +64,9 @@ export class FormatterService {
       alert('Error al obtener las categorías: ' + result.data);
     }
     return result.data;
+  }
+
+  formatDateToMonthYear(date: Date): string {
+    return `${this.months[date.getMonth()]} de ${date.getFullYear()}`;
   }
 }

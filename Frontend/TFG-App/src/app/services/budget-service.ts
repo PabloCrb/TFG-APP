@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Budget } from '../interfaces/budget-interface';
+import { API_URL } from '../constants';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +8,7 @@ import { Budget } from '../interfaces/budget-interface';
 export class BudgetService {
   async getUserBudgets(cardID: number): Promise<Budget[]> {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:3000/budgets/getUserBudgets', {
+    const response = await fetch(`${API_URL}/budgets/getUserBudgets`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -28,7 +29,7 @@ export class BudgetService {
 
   async createBudget(budgetData: Budget): Promise<any> {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:3000/budgets/createBudget', {
+    const response = await fetch(`${API_URL}/budgets/createBudget`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -46,7 +47,7 @@ export class BudgetService {
 
   async editBudget(budget: Budget): Promise<any> {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:3000/budgets/editBudget', {
+    const response = await fetch(`${API_URL}/budgets/editBudget`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -59,7 +60,7 @@ export class BudgetService {
 
   async deleteBudget(budget: Budget) {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:3000/budgets/deleteBudget', {
+    const response = await fetch(`${API_URL}/budgets/deleteBudget`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -72,7 +73,7 @@ export class BudgetService {
 
   async getTransactionsForBudget(transaction_ids: number[]): Promise<any> {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:3000/budgets/getTransactionsForBudget', {
+    const response = await fetch(`${API_URL}/budgets/getTransactionsForBudget`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,

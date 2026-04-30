@@ -43,7 +43,7 @@ export class BudgetCardComponent {
   get progressBarColor(): string {
     const percentage = this.progressPercentage;
     if (percentage >= 100) return 'red';
-    if (percentage > 85) return 'orange';
+    if (percentage > 80) return 'orange';
     return 'green';
   }
 
@@ -63,15 +63,15 @@ export class BudgetCardComponent {
 
     switch (period) {
       case Period.DIARIO:
-        end.setDate(end.getDate() + 2);
+        end.setDate(end.getDate() + 1);
         break;
 
       case Period.SEMANAL:
-        end.setDate(end.getDate() + 8);
+        end.setDate(end.getDate() + 7);
         break;
 
       case Period.QUINCENAL:
-        end.setDate(end.getDate() + 16);
+        end.setDate(end.getDate() + 15);
         break;
 
       case Period.MENSUAL:
