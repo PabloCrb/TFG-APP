@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class SelectedCardService {
-  selectedCard?: number;
+  private selectedCard$ = new BehaviorSubject<number | undefined>(undefined);
+  selectedCard$$ = this.selectedCard$.asObservable();
 
-  setSelectedCard(cardID: number) {
-    this.selectedCard = cardID;
+  setSelectedCard(cardId: number): void {
+    this.selectedCard$.next(cardId);
   }
 
-  getSelectedCard() {
-    return this.selectedCard;
+  getSelectedCard(): number | undefined {
+    return this.selectedCard$.getValue();
   }
 }

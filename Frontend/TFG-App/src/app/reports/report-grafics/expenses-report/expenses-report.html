@@ -1,0 +1,62 @@
+@if (report?.data) {
+  <div class="report-container">
+    <!-- 🧠 SUMMARY -->
+    <div class="summary" [ngClass]="report.data.summary.status">
+      <h2>
+        {{
+          report.data.summary.status === 'ok'
+            ? '🟢 Salud financiera buena'
+            : report.data.summary.status === 'warning'
+              ? '🟡 Atención'
+              : '🔴 Riesgo financiero'
+        }}
+      </h2>
+
+      <ul>
+        @for (insight of report.data.summary.mainInsights; track insight) {
+          <li>{{ insight }}</li>
+        }
+      </ul>
+    </div>
+
+    <!-- 📊 CHART -->
+    @if (barChartData) {
+      <div class="chart-container">
+        <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'">
+        </canvas>
+      </div>
+    }
+
+    <!-- ⚠️ ALERTS -->
+    @if (report.data.alerts?.length) {
+      <div class="alerts">
+        <h3>⚠️ Alertas</h3>
+
+        @for (alert of report.data.alerts; track alert) {
+          <div class="alert" [ngClass]="alert.impact">
+            <span class="icon">
+              {{ alert.impact === 'high' ? '🔴' : alert.impact === 'medium' ? '🟠' : '🔵' }}
+            </span>
+            {{ alert.message }}
+          </div>
+        }
+      </div>
+    }
+
+    <!-- 💡 RECOMMENDATIONS -->
+    @if (report.data.recommendations?.length) {
+      <div class="recommendations">
+        <h3>💡 Recomendaciones</h3>
+
+        @for (rec of report.data.recommendations; track rec) {
+          <div class="alert" [ngClass]="rec.impact">
+            <span class="icon">
+              {{ rec.impact === 'high' ? '🔴' : rec.impact === 'medium' ? '🟠' : '🔵' }}
+            </span>
+            {{ rec.message }}
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

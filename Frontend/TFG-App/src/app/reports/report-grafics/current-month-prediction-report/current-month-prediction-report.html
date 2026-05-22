@@ -1,0 +1,50 @@
+@if (report?.data) {
+  <div class="report-container">
+    <!-- 💰 TOTALES -->
+    <div class="totals">
+      <div class="card income">
+        <h3>💰 Ingresos</h3>
+        <p>{{ totalIncome }} €</p>
+      </div>
+
+      <div class="card expenses">
+        <h3>💸 Gastos</h3>
+        <p>{{ totalExpenses }} €</p>
+      </div>
+
+      <div class="card balance" [ngClass]="totals.balance >= 0 ? 'positive' : 'negative'">
+        <h3>📊 Balance</h3>
+        <p>{{ totals.balance }} €</p>
+      </div>
+    </div>
+
+    <!-- 📊 GRÁFICA GASTOS -->
+    @if (expensesChartData) {
+      <div class="chart-container">
+        <h3>Gastos por categoría</h3>
+        <canvas baseChart [data]="expensesChartData" [type]="'bar'"></canvas>
+      </div>
+    }
+
+    <!-- 📊 GRÁFICA INGRESOS -->
+    @if (incomeChartData) {
+      <div class="chart-container">
+        <h3>Ingresos por categoría</h3>
+        <canvas baseChart [data]="incomeChartData" [type]="'bar'"></canvas>
+      </div>
+    }
+
+    <!-- 🧠 INSIGHTS -->
+    @if (insights.length) {
+      <div class="insights">
+        <h3>🧠 Insights</h3>
+
+        @for (insight of insights; track insight) {
+          <div class="insight">
+            {{ insight }}
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

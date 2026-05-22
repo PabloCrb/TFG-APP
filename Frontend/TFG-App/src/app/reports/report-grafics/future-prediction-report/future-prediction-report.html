@@ -1,0 +1,31 @@
+@if (report?.data.prediction?.length) {
+  <div class="report-container">
+    <!-- 📅 PREDICTION LIST -->
+    <div class="months-header">
+      <h2>📅 Predicción de gastos (6 meses)</h2>
+    </div>
+
+    <div class="chart-container">
+      <canvas baseChart [data]="chartData" [type]="'bar'"> </canvas>
+    </div>
+
+    <div class="categories">
+      @for (month of report.data.prediction; track month.monthNumber) {
+        <div class="category-card">
+          <h3>{{ month.monthName }}</h3>
+          <p>{{ month.predictedAmount | currency: 'EUR' }}</p>
+        </div>
+      }
+    </div>
+
+    <!-- 🧠 INSIGHTS -->
+    @if (report.data.insights?.length) {
+      <div class="insights">
+        <h3>🧠 Conclusiones</h3>
+        @for (insight of report.data.insights; track insight) {
+          <div class="insight">{{ insight }}</div>
+        }
+      </div>
+    }
+  </div>
+}

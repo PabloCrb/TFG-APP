@@ -76,7 +76,6 @@ function verifyToken(req, res, next) {
     return;
   }
 
-  // ❌ ninguno presente
   return res.status(401).json({ error: "No authentication provided" });
 }
 
@@ -235,6 +234,20 @@ app.post("/transactions/getTransactionTypes", verifyToken, async (req, res) => {
 
   res.json({ ok: true, data: results });
 });
+
+app.get(
+  "/transactions/getAllTransactionTypes",
+  verifyToken,
+  async (req, res) => {
+    const userID = req.user.id;
+
+    const sql =
+      "SELECT transaction_type_id, label FROM transaction_types WHERE (user_id = ? OR user_id = 0)";
+    const results = await queryDB(sql, [userID]);
+
+    res.json({ ok: true, data: results });
+  },
+);
 
 app.get("/transactions/getTransactionLabels", verifyToken, async (req, res) => {
   const userID = req.user.id;
@@ -488,7 +501,7 @@ const generateRecurringTransactions = async () => {
 
 async function getRecurringTransactions() {
   const sqlGetRT =
-    "SELECT rt.*, f.interval_days_value FROM recurring_transactions rt JOIN frequencies f ON rt.frequency_id = f.frequency_id WHERE rt.active = true";
+    "SELECT u.id as user_id, rt.*, f.interval_days_value FROM recurring_transactions rt JOIN frequencies f ON rt.frequency_id = f.frequency_id JOIN users u ON rt.user_id = u.id WHERE rt.active = true AND u.active = true";
 
   return await queryDB(sqlGetRT, []);
 }
@@ -801,6 +814,73 @@ app.post("/budgets/getTransactionsForBudget", verifyToken, async (req, res) => {
 
 //--------------------------------------------------
 
+//-----------------------DASHBOARD------------------
+
+app.get("/dashboard/getSummary", verifyToken, async (req, res) => {
+  try {
+    const userID = req.user.id;
+    const sql = `
+      SELECT 
+        DATE_FORMAT(transaction_date, '%Y-%m') AS month,
+        
+        SUM(CASE 
+            WHEN amount > 0 THEN amount 
+            ELSE 0 
+        END) AS total_income,
+
+        SUM(CASE 
+            WHEN amount < 0 THEN ABS(amount) 
+            ELSE 0 
+        END) AS total_expenses,
+
+        SUM(amount) AS balance
+
+    FROM transactions
+    WHERE user_id = ? 
+    GROUP BY month
+    ORDER BY month;
+  `;
+    const response = await queryDB(sql, [userID]);
+    res.status(200).json({ ok: true, data: response });
+  } catch (error) {
+    res.status(500).json({ ok: false, data: JSON.stringify(error) });
+  }
+});
+
+//--------------------------------------------------
+
+//---------------------NOTIFICACIONES---------------
+async function createNotification(userID, notif) {
+  const id = crypto.randomUUID();
+
+  await queryDB(
+    `INSERT INTO notifications (id, user_id, type, title, message)
+     VALUES (?, ?, ?, ?, ?)`,
+    [id, userID, notif.type, notif.title, notif.message],
+  );
+}
+
+app.get("/notifications/getNotifications", verifyToken, async (req, res) => {
+  const userID = req.user.id;
+
+  const response = await queryDB(
+    "SELECT * FROM notifications WHERE user_id = ? AND isRead = 0 ORDER BY created_at DESC",
+    [userID],
+  );
+
+  res.status(200).json({ ok: true, data: response });
+});
+
+app.post("/notifications/markAsRead", verifyToken, async (req, res) => {
+  const userID = req.user.id;
+  const { notificationId } = req.body;
+
+  const sql = `UPDATE notifications SET isRead = 1 WHERE id = ? AND user_id = ?`;
+  const response = await queryDB(sql, [notificationId, userID]);
+
+  res.status(200).json({ ok: true, data: response });
+});
+
 //---------------------ENDPOINTS PARA IA------------
 
 app.get("/getActiveUserBudgets", verifyToken, async (req, res) => {
@@ -835,7 +915,6 @@ app.get("/getActiveUserBudgets", verifyToken, async (req, res) => {
       `;
 
   const response = await queryDB(sql, []);
-  console.log(response);
   res.status(200).json({ ok: true, data: response });
 });
 
@@ -872,6 +951,162 @@ app.post("/AI/getUserBudgets", verifyToken, async (req, res) => {
   const response = await queryDB(sql, [userID, cardID, userID, cardID]);
 
   res.status(200).json({ ok: true, data: response });
+});
+
+async function getUserAndCardExpenses(userID, cardID) {
+  try {
+    const sql = `SELECT 
+          tt.label AS category,
+          SUM(ABS(t.amount)) AS total_amount
+      FROM transactions t
+      INNER JOIN transaction_types tt 
+          ON t.transaction_type_id = tt.transaction_type_id
+      WHERE tt.isIncome = false AND t.user_id = ? AND t.card_id = ?
+      GROUP BY tt.transaction_type_id, tt.label
+      ORDER BY total_amount ASC;
+    `;
+
+    const response = await queryDB(sql, [userID, cardID]);
+
+    return { ok: true, data: response };
+  } catch (error) {
+    return { ok: false, data: JSON.stringify(error) };
+  }
+}
+
+async function getUserAndCardTransactions(userID, cardID) {
+  try {
+    const sql = `
+      SELECT 
+          DATE_FORMAT(t.transaction_date, '%Y-%m') AS month,
+          tt.label AS category,
+          tt.isIncome,
+          SUM(t.amount) AS total_amount
+      FROM transactions t
+      INNER JOIN transaction_types tt 
+          ON t.transaction_type_id = tt.transaction_type_id
+      WHERE t.user_id = ? 
+        AND t.card_id = ?
+        AND t.transaction_date >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+      GROUP BY 
+          DATE_FORMAT(t.transaction_date, '%Y-%m'),
+          tt.label,
+          tt.isIncome 
+      ORDER BY month desc, total_amount desc;
+        `;
+
+    const response = await queryDB(sql, [userID, cardID]);
+    return { ok: true, data: response };
+  } catch (error) {
+    return { ok: false, data: JSON.stringify(error) };
+  }
+}
+
+app.post("/AI/getUserAndCardExpenses", verifyToken, async (req, res) => {
+  const userID = req.body.userID;
+  const cardID = req.body.cardID;
+
+  const response = await getUserAndCardExpenses(userID, cardID);
+  if (!response.ok)
+    return res.status(500).json({ ok: false, data: response.data });
+  return res.status(200).json({ ok: true, data: response.data });
+});
+
+app.post("/AI/getUserAndCardTransactions", verifyToken, async (req, res) => {
+  const userID = req.body.userID;
+  const cardID = req.body.cardID;
+
+  const response = await getUserAndCardTransactions(userID, cardID);
+  if (!response.ok)
+    return res.status(500).json({ ok: false, data: response.data });
+  return res.status(200).json({ ok: true, data: response.data });
+});
+
+app.post(
+  "/AI/getUserAndCardRecurringExpenses",
+  verifyToken,
+  async (req, res) => {
+    const userID = req.body.userID;
+    const cardID = req.body.cardID;
+
+    const sql = `
+      SELECT ABS(rt.amount) as amount, rt.description, f.label, rt.start_date, rt.end_date, rt.last_executed 
+      FROM recurring_transactions rt LEFT JOIN frequencies f ON rt.frequency_id = f.frequency_id
+      LEFT JOIN users u ON rt.user_id = u.id
+      WHERE u.active = true AND rt.user_id = ? AND rt.card_id = ? AND (rt.end_date < NOW() or rt.end_date is null) AND rt.amount < 0 AND rt.active = true AND u.active = true 
+    `;
+
+    const response = await queryDB(sql, [userID, cardID]);
+
+    return res.status(200).json({ ok: true, data: response });
+  },
+);
+
+async function getUserAndCardBudgets(userID, cardID) {
+  try {
+    const sql = `
+      SELECT 
+          b.budget_id,
+          b.label,
+          b.amount,
+          b.period_type,
+          b.start_date,
+          ABS(COALESCE(SUM(t.amount), 0)) AS spent,
+          JSON_ARRAYAGG(t.transaction_id) AS transaction_ids
+      FROM budgets b
+      LEFT JOIN budget_transactions bt 
+          ON bt.budget_id = b.budget_id
+      LEFT JOIN transactions t 
+          ON t.transaction_id = bt.transaction_id
+      WHERE b.user_id = ? 
+        AND b.card_id = ?
+      GROUP BY b.budget_id;
+    `;
+
+    const response = await queryDB(sql, [userID, cardID]);
+
+    return { ok: true, data: response };
+  } catch (error) {
+    return { ok: false, data: JSON.stringify(error) };
+  }
+}
+
+app.post("/AI/getUserAndCardBudgets", verifyToken, async (req, res) => {
+  const userID = req.body.userID;
+  const cardID = req.body.cardID;
+
+  const response = await getUserAndCardBudgets(userID, cardID);
+  if (!response.ok)
+    return res.status(500).json({ ok: false, data: response.data });
+  return res.status(200).json({ ok: true, data: response.data });
+});
+
+app.post("/AI/generateAIReport", verifyToken, async (req, res) => {
+  const userID = req.user.id;
+  const categoriesIDs = req.body.categoriesIDs;
+  const selectedCard = req.body.selectedCard;
+
+  const response = await fetch(
+    `${process.env.API_URL}:${process.env.AI_PORT}/AI/generateAIReport`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-internal-key": process.env.INTERNAL_API_KEY,
+      },
+      body: JSON.stringify({
+        userID: userID,
+        categoriesIDs: categoriesIDs,
+        selectedCard: selectedCard,
+      }),
+    },
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) return res.status(500).json({ ok: false, data: data.data });
+
+  res.status(200).json({ ok: true, data: data.data });
 });
 
 //--------------------------------------------------

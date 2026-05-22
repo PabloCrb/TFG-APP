@@ -7,7 +7,7 @@ import {
   getDOM,
   parseCookieValue,
   setRootDomAdapter
-} from "./chunk-WJLVVF3F.js";
+} from "./chunk-SEZQN2PM.js";
 import {
   APP_BOOTSTRAP_LISTENER,
   APP_ID,
@@ -15,85 +15,95 @@ import {
   ApplicationRef,
   CSP_NONCE,
   Console,
-  DOCUMENT,
-  DestroyRef,
-  ENVIRONMENT_INITIALIZER,
-  EnvironmentInjector,
-  ErrorHandler,
-  INJECTOR_SCOPE,
   IS_ENABLED_BLOCKING_INITIAL_NAVIGATION,
   Inject,
   Injectable,
-  InjectionToken,
-  Injector,
   NgModule,
-  NgZone,
-  Observable,
   Optional,
   PLATFORM_ID,
   PLATFORM_INITIALIZER,
-  PendingTasks,
   RendererFactory2,
   RendererStyleFlags2,
-  ResourceImpl,
-  RuntimeError,
   SecurityContext,
   TESTABILITY,
   TESTABILITY_GETTER,
   Testability,
   TracingService,
   TransferState,
-  Version,
   ViewEncapsulation,
-  XSS_SECURITY_URL,
-  __objRest,
-  __spreadProps,
-  __spreadValues,
-  _global,
   _sanitizeHtml,
   _sanitizeUrl,
   allLeavingAnimations,
   allowSanitizationBypassAndThrow,
-  assertInInjectionContext,
   bypassSanitizationTrustHtml,
   bypassSanitizationTrustResourceUrl,
   bypassSanitizationTrustScript,
   bypassSanitizationTrustStyle,
   bypassSanitizationTrustUrl,
-  computed,
-  concatMap,
   createPlatformFactory,
-  encapsulateResourceError,
-  filter,
-  finalize,
-  formatRuntimeError,
-  forwardRef,
-  inject,
   internalCreateApplication,
-  linkedSignal,
-  makeEnvironmentProviders,
   makeStateKey,
-  map,
-  of,
   performanceMarkFeature,
   platformCore,
   provideStabilityDebugging,
-  runInInjectionContext,
   setClassMetadata,
   setDocument,
-  signal,
-  switchMap,
-  truncateMiddle,
   unwrapSafeValue,
   withDomHydration,
   withEventReplay,
   withI18nSupport,
   withIncrementalHydration,
+  ɵɵdefineNgModule
+} from "./chunk-QU42OZTJ.js";
+import {
+  DOCUMENT,
+  DestroyRef,
+  ENVIRONMENT_INITIALIZER,
+  EnvironmentInjector,
+  ErrorHandler,
+  INJECTOR_SCOPE,
+  InjectionToken,
+  Injector,
+  NgZone,
+  PendingTasks,
+  ResourceImpl,
+  RuntimeError,
+  Version,
+  XSS_SECURITY_URL,
+  _global,
+  assertInInjectionContext,
+  computed,
+  encapsulateResourceError,
+  formatRuntimeError,
+  forwardRef,
+  inject,
+  linkedSignal,
+  makeEnvironmentProviders,
+  runInInjectionContext,
+  signal,
+  truncateMiddle,
   ɵɵdefineInjectable,
   ɵɵdefineInjector,
-  ɵɵdefineNgModule,
   ɵɵinject
-} from "./chunk-XMWLZIBH.js";
+} from "./chunk-QOF4YPUP.js";
+import {
+  concatMap,
+  finalize,
+  map,
+  of,
+  switchMap
+} from "./chunk-JQBBNB6J.js";
+import {
+  Observable
+} from "./chunk-DZXNSXXQ.js";
+import {
+  filter
+} from "./chunk-FGRBUWHZ.js";
+import {
+  __objRest,
+  __spreadProps,
+  __spreadValues
+} from "./chunk-GOMI4DH3.js";
 
 // node_modules/@angular/platform-browser/fesm2022/_dom_renderer-chunk.mjs
 var EventManagerPlugin = class {
@@ -4120,4 +4130,4 @@ export {
   provideClientHydration,
   VERSION
 };
-//# sourceMappingURL=chunk-CXCF2HQA.js.map
+//# sourceMappingURL=chunk-JXKYVIXP.js.map

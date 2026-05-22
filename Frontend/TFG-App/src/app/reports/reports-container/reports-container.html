@@ -1,0 +1,56 @@
+<div class="main-container">
+  <app-card-carrousel></app-card-carrousel>
+  <p class="report-title">Reportes Inteligentes</p>
+  <p class="report-subtitle">
+    Seleccione entre 1 y 3 categorías que desea incluir en su reporte para la cuenta seleccionada
+  </p>
+
+  <div class="selector-grid">
+    @for (option of options; track option; let i = $index) {
+      <div
+        [id]="option.id"
+        class="scope-card"
+        [class.selected]="option.selected"
+        (click)="toggleOption(option)"
+        [style.animationDelay.ms]="i * 80"
+      >
+        <div class="card-icon">
+          <span class="material-icons">{{ option.icon }}</span>
+        </div>
+        <div class="card-content">
+          <h4>{{ option.title }}</h4>
+          <p>{{ option.description }}</p>
+        </div>
+        <div class="selection-indicator">
+          <span class="material-icons">
+            {{ option.selected ? 'check_circle' : 'add_circle_outline' }}
+          </span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="error-container">
+    <span class="error-text">{{ errorText }}</span>
+  </div>
+  <div class="action-bar">
+    <button class="btn-generate" [disabled]="!isValid()" (click)="generateAIReport()">
+      <span class="material-icons">auto_awesome</span>
+      Generar Reporte
+    </button>
+  </div>
+
+  @if (ai_report.length > 0) {
+    <div class="tabs">
+      @for (report of ai_report; track $index; let i = $index) {
+        <button (click)="activeIndex = i" [class.active]="activeIndex === i">
+          {{ i + 1 }}
+        </button>
+      }
+    </div>
+
+    <div class="reports-container">
+      <app-ai-report [report]="ai_report[activeIndex]" />
+    </div>
+  }
+</div>

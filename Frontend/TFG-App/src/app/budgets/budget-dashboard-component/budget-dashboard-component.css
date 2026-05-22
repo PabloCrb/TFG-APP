@@ -48,12 +48,25 @@
 }
 
 .overall-container {
+  animation: fadeSlideDown 0.5s ease both;
   margin: 0 0 0 1em;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(14em, 1fr));
   gap: 25px;
   width: 80%;
 }
+
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .overall-card {
   padding: 1em;
   border-radius: 5%;

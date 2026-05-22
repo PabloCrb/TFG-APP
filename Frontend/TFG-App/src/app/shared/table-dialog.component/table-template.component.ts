@@ -19,12 +19,4 @@ export class TableTemplateComponent {
   onAddRecurringTransaction(isIncome: boolean) {
     this.action.emit({ action: 'add', isIncome: isIncome });
   }
-
-  onEdit(row: any) {
-    this.action.emit({ action: 'edit', row: row });
-  }
-
-  onDelete(row: any) {
-    this.action.emit({ action: 'delete', row: row });
-  }
 }

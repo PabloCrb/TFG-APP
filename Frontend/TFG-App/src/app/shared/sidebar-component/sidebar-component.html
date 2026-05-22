@@ -2,6 +2,11 @@
   <div class="logo">
     <div class="logo-icon"></div>
     <h2 style="cursor: pointer" (click)="navigateToLogin()">Finanzas <span>TFG</span></h2>
+    <app-notification
+      [notifications]="notifications"
+      [unreadCount]="unreadCount"
+      (markAsReadEmitter)="onMarkAsRead($event)"
+    />
   </div>
 
   <ul class="nav-links">

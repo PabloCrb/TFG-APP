@@ -5,10 +5,11 @@ import { Period } from '../../enumerates/period-enumerate';
 import { DialogService } from '../../services/shared/dialog-service';
 import { TableTemplateComponent } from '../../shared/table-dialog.component/table-template.component';
 import { BudgetService } from '../../services/budget-service';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-budget-card-component',
-  imports: [],
+  imports: [DecimalPipe],
   templateUrl: './budget-card-component.html',
   styleUrl: './budget-card-component.css',
 })

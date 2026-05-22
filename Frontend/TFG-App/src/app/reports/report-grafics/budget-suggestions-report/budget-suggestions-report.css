@@ -1,0 +1,147 @@
+.report-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: #f7f9fc;
+  border-radius: 12px;
+}
+
+/* 🧠 SUMMARY */
+.summary {
+  padding: 1.2rem;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.summary h2 {
+  margin-bottom: 0.8rem;
+  font-size: 1.2rem;
+}
+
+.summary.ok {
+  border-left: 6px solid #2ecc71;
+}
+
+.summary.warning {
+  border-left: 6px solid #f1c40f;
+}
+
+.summary.error,
+.summary.risk {
+  border-left: 6px solid #e74c3c;
+}
+
+/* 📊 CHART */
+.chart-container {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 📂 CATEGORIES */
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.category-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-3px);
+}
+
+.category-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.category-card p {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* ⚠️ ALERTS */
+.alerts,
+.recommendations {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.alert,
+.recommendation {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.7rem;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  background: #f8f9fb;
+}
+
+/* Impact colors */
+.alert.high,
+.recommendation.high {
+  border-left: 4px solid #e74c3c;
+}
+
+.alert.medium,
+.recommendation.medium {
+  border-left: 4px solid #f39c12;
+}
+
+.alert.low,
+.recommendation.low {
+  border-left: 4px solid #3498db;
+}
+
+.icon {
+  font-size: 1.2rem;
+}
+
+/* 💡 INSIGHTS */
+.insights {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.insight {
+  padding: 0.6rem;
+  border-left: 3px solid #8e44ad;
+  margin-top: 0.5rem;
+  background: #faf7ff;
+  border-radius: 6px;
+}
+
+/* 💰 TOTAL (para prediction report) */
+.total {
+  background: white;
+  padding: 1.5rem;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.total .amount {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+}

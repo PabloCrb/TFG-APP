@@ -1,0 +1,36 @@
+@if (report?.data) {
+  <div class="report-container">
+    <!-- 💡 SUGGESTIONS -->
+    @if (suggestions.length) {
+      <div class="alerts">
+        <h3>💡 Sugerencias de presupuesto</h3>
+
+        @for (s of suggestions; track s.category) {
+          <div
+            class="alert"
+            [ngClass]="s.impact === 'alto' ? 'high' : s.impact === 'medio' ? 'medium' : 'low'"
+          >
+            <span class="icon">
+              {{ s.impact === 'alto' ? '🔴' : s.impact === 'medio' ? '🟡' : '🟢' }}
+            </span>
+            <div>
+              <strong>{{ s.category }}</strong>
+              <p>{{ s.action }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- 🧠 INSIGHTS -->
+    @if (insights.length) {
+      <div class="insights">
+        <h3>🧠 Insights</h3>
+
+        @for (insight of insights; track insight) {
+          <div class="insight">{{ insight }}</div>
+        }
+      </div>
+    }
+  </div>
+}

@@ -1,0 +1,17 @@
+@switch (report.type) {
+  @case (0) {
+    <app-expenses-report [report]="report" />
+  }
+  @case (1) {
+    <app-recurring-report [report]="report" />
+  }
+  @case (2) {
+    <app-current-month-prediction-report [report]="report" />
+  }
+  @case (3) {
+    <app-future-prediction-report [report]="report" />
+  }
+  @case (4) {
+    <app-budget-suggestions-report [report]="report" />
+  }
+}

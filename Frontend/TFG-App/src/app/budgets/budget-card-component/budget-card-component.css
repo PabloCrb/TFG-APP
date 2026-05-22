@@ -3,6 +3,7 @@
 }
 
 .budget-card {
+  animation: fadeSlideUp 0.5s ease both;
   font-family: 'Poppins', sans-serif;
   margin: 2em;
   padding: 20px;
@@ -170,4 +171,15 @@
 .delete-btn:hover {
   background-color: #fdf2f2;
   color: #e74c3c;
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

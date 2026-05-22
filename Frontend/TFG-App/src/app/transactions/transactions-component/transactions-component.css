@@ -154,9 +154,21 @@
 
 /* ── Table ── */
 .transactions-table {
+  animation: fadeSlideUp 0.5s ease both;
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .transactions-table th {

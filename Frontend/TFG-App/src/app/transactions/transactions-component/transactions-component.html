@@ -18,21 +18,31 @@
 
   <div class="filters-container">
     <span class="filter-label">Periodo</span>
-    <select class="filter-date">
+    <select class="filter-date" [(ngModel)]="filters.period" (change)="applyFilters()">
       <option value="week">Esta semana</option>
       <option value="month">Este mes</option>
       <option value="year">Este año</option>
+      <option value="all">Todos</option>
     </select>
     <span class="filter-label">Tipo</span>
-    <select class="filter-type">
-      <option value="">Todos</option>
-      <option value="ingreso">Ingresos</option>
-      <option value="gasto">Gastos</option>
+    <select class="filter-type" [(ngModel)]="filters.type" (change)="applyFilters()">
+      <option value="all">Todos</option>
+      <option value="income">Ingresos</option>
+      <option value="expense">Gastos</option>
+    </select>
+    <span class="filter-label">Categoría</span>
+    <select class="filter-type" [(ngModel)]="filters.category" (change)="applyFilters()">
+      <option value="all">Todas</option>
+      @for (category of transactionTypes; track category.transaction_type_id) {
+        <option value="{{ category.transaction_type_id }}">{{ category.label }}</option>
+      }
     </select>
     <input
       type="search"
       class="filter-search"
       placeholder="Buscar por nombre, tienda o concepto…"
+      [(ngModel)]="filters.search"
+      (change)="applyFilters()"
     />
   </div>
 
@@ -46,12 +56,12 @@
       </tr>
     </thead>
     <tbody>
-      @if (movements?.length === 0) {
+      @if (filteredTransactions?.length === 0) {
         <tr>
-          <td colspan="4" class="no-data">No hay transacciones para esta tarjeta</td>
+          <td colspan="4" class="no-data">No hay transacciones</td>
         </tr>
       } @else {
-        @for (transaction of movements; track transaction.transaction_id) {
+        @for (transaction of filteredTransactions; track transaction.transaction_id) {
           <tr>
             <td>
               <b>{{

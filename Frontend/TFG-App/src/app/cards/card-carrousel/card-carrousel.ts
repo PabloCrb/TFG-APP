@@ -31,6 +31,7 @@ export class CardCarrousel {
   async ngOnInit() {
     try {
       this.cards = await this.getUserCards();
+      if (this.cards.length === 0) return;
       this.markAsSelected(this.cards[0].card_id);
       this._selectedCardService.setSelectedCard(this.cards[0].card_id);
       this.cdr.detectChanges();

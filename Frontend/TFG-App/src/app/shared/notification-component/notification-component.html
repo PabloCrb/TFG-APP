@@ -1,0 +1,40 @@
+<div class="notification-wrapper">
+  <div class="notification-bell" (click)="toggle()">
+    <span class="material-icons">notifications</span>
+    @if (unreadCount > 0) {
+      <span class="notification-count">{{ unreadCount }}</span>
+    }
+  </div>
+
+  @if (open) {
+    <div class="notification-dropdown">
+      <div class="notification-header">
+        <span>Notificaciones</span>
+        @if (unreadCount > 0) {
+          <button (click)="markAllAsRead.emit()">Marcar todas como leídas</button>
+        }
+      </div>
+
+      @if (notifications.length === 0) {
+        <p class="empty">Sin notificaciones</p>
+      }
+
+      @for (n of notifications; track n.id) {
+        <div
+          class="notification-item"
+          [class.unread]="!n.read"
+          [class.removing]="n.removing"
+          (click)="markAsRead(n)"
+        >
+          <strong>{{ n.title }}</strong>
+          <div id="message-container">
+            <p>{{ n.message }}</p>
+            <span id="check-icon" class="material-icons" (click)="markAsRead(n)"
+              >check_circle_outline</span
+            >
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

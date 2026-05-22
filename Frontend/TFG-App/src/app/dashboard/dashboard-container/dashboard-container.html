@@ -1,0 +1,74 @@
+<div id="main-container">
+  <div id="dashboard-container">
+    <app-card-carrousel></app-card-carrousel>
+    <!-- ✦ HEADER -->
+    <div class="dashboard-header">
+      <div class="header-title">
+        <h1>Dashboard financiero</h1>
+        <p style="color: #95a5a6">Vea una evolución temporal de su economía</p>
+      </div>
+    </div>
+
+    @if (userSummary?.length) {
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-income">
+          <div class="kpi-icon">↑</div>
+          <div class="kpi-body">
+            <span class="kpi-label">Ingresos totales</span>
+            <span class="kpi-value">{{ formatCurrency(totalIncome) }} €</span>
+          </div>
+          <div class="kpi-bar" style="--fill: #34d399"></div>
+        </div>
+        <div class="kpi-card kpi-expenses">
+          <div class="kpi-icon">↓</div>
+          <div class="kpi-body">
+            <span class="kpi-label">Gastos totales</span>
+            <span class="kpi-value">{{ formatCurrency(totalExpenses) }} €</span>
+          </div>
+          <div class="kpi-bar" style="--fill: #fb7185"></div>
+        </div>
+        <div
+          class="kpi-card kpi-balance"
+          [class.positive]="totalIncome - totalExpenses >= 0"
+          [class.negative]="totalIncome - totalExpenses < 0"
+        >
+          <div class="kpi-icon">≈</div>
+          <div class="kpi-body">
+            <span class="kpi-label">Balance neto</span>
+            <span class="kpi-value">{{ formatCurrency(totalIncome - totalExpenses) }} €</span>
+          </div>
+          <div class="kpi-bar" style="--fill: #38bdf8"></div>
+        </div>
+      </div>
+    }
+
+    <!-- ✦ CHART PANEL -->
+    @if (chartData) {
+      <div class="chart-panel">
+        <div class="chart-panel-header">
+          <div class="chart-title">
+            <span class="chart-dot"></span>
+            Evolución financiera
+          </div>
+
+          <!-- FILTERS -->
+          <div class="filters">
+            @for (f of filters; track f.value) {
+              <button
+                class="filter-btn"
+                [class.active]="activeFilter === f.value"
+                (click)="setRange(f.value)"
+              >
+                {{ f.label }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="chart-wrapper">
+          <canvas baseChart [data]="chartData" [options]="chartOptions" [type]="'bar'"> </canvas>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -21,4 +21,20 @@ export class TransactionTypesService {
     }
     return result.data;
   }
+
+  async getAllTransactionTypes(): Promise<string[]> {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_URL}/transactions/getAllTransactionTypes`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    const result = await response.json();
+    if (!result.ok) {
+      alert('Error al obtener las categorías: ' + result.data);
+    }
+    return result.data;
+  }
 }

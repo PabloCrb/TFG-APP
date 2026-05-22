@@ -1,8 +1,15 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DialogService } from '../../services/shared/dialog-service';
 import { FormTemplate } from '../../templates/form-template/form-template';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormsModule } from '@angular/forms';
 import { TransactionsService } from '../../services/transactions.service';
 import { SelectedCardService } from '../../services/shared/selected-card-service';
 import { FormConfigInterface } from '../../interfaces/form-config-interface';
@@ -11,11 +18,13 @@ import { TableTemplateComponent } from '../../shared/table-dialog.component/tabl
 import { FormatterService } from '../../services/shared/formatter-service';
 import { RecurringTransaction } from '../../interfaces/recurring-transaction-interface';
 import { TransactionTypesService } from '../../services/shared/transaction-types-service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter } from 'rxjs/internal/operators/filter';
 
 @Component({
   selector: 'app-transactions-component',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './transactions-component.html',
   styleUrls: ['./transactions-component.css'],
 })
@@ -25,14 +34,38 @@ export class TransactionsComponent {
   _selectedCardService = inject(SelectedCardService);
   _formatterService = inject(FormatterService);
   _transactionTypesService = inject(TransactionTypesService);
+  _cdr = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
 
   @Output() balanceUpdated = new EventEmitter<void>();
 
-  movements: Transaction[] | null = [];
+  transactions: Transaction[] | null = [];
+  filteredTransactions: Transaction[] | null = [];
+
   formattedDates: Map<number, string> = new Map();
   form: FormGroup = new FormGroup({});
+  transactionTypes: any[] = [];
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  filters = {
+    period: 'month',
+    type: 'all',
+    category: 'all',
+    search: '',
+  };
+
+  async ngOnInit() {
+    this.transactionTypes = await this._transactionTypesService.getAllTransactionTypes();
+
+    this._selectedCardService.selectedCard$$
+      .pipe(
+        filter((cardId) => cardId !== null),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(async (cardId) => {
+        await this.getTransactions(cardId!);
+        this.applyFilters();
+      });
+  }
 
   async loadTransactionTypes(isIncome: boolean) {
     const response = await this._transactionTypesService.getTransactionTypes(isIncome);
@@ -96,8 +129,8 @@ export class TransactionsComponent {
   async getTransactions(cardID: number | null) {
     const response = await this._transactionsService.getTransactions(cardID);
     if (response.ok) {
-      this.movements = response.data;
-      this.cdr.detectChanges();
+      this.transactions = response.data;
+      this._cdr.detectChanges();
       return;
     } else {
       alert('Error al obtener las transacciones' + response.data);
@@ -267,18 +300,18 @@ export class TransactionsComponent {
     const result = await this._dialogService.openComponent(FormTemplate, {
       config: [
         {
-          type: 'number',
-          name: 'amount',
-          label: 'Cantidad',
-          validators: ['required'],
-          errors: { required: 'La cantidad es obligatoria' },
-        },
-        {
           type: 'text',
           name: 'description',
           label: 'Descripción',
           validators: ['required'],
           errors: { required: 'La descripción es obligatoria' },
+        },
+        {
+          type: 'number',
+          name: 'amount',
+          label: 'Cantidad',
+          validators: ['required'],
+          errors: { required: 'La cantidad es obligatoria' },
         },
         {
           type: 'date',
@@ -449,5 +482,69 @@ export class TransactionsComponent {
       if (!response.ok) alert('Error al crear el tipo de transacción: ' + response.data);
       else alert('Tipo de transacción creado correctamente');
     }
+  }
+
+  applyFilters(): void {
+    const { period, type, category, search } = this.filters;
+    let result = [...this.transactions!];
+
+    result = this.filterByPeriod(result, period);
+
+    if (type) {
+      switch (type) {
+        case 'income':
+          result = result.filter((t) => t.amount >= 0);
+          break;
+        case 'expense':
+          result = result.filter((t) => t.amount < 0);
+          break;
+        default:
+          break;
+      }
+    }
+
+    if (category) {
+      if (category !== 'all' && category !== undefined && category !== null)
+        result = result.filter((t) => t.transaction_type_id === parseInt(category));
+    }
+
+    if (search?.trim()) {
+      const s = search.toLowerCase();
+      result = result.filter((t) => t.description.toLowerCase().includes(s));
+    }
+    this.filteredTransactions = result;
+  }
+
+  filterByPeriod(transactions: any[], period: string): any[] {
+    const now = new Date();
+
+    return transactions.filter((t) => {
+      const date = new Date(t.transaction_date);
+
+      switch (period) {
+        case 'week': {
+          const monday = new Date(now);
+          const day = now.getDay();
+          const diff = day === 0 ? -6 : 1 - day;
+          monday.setDate(now.getDate() + diff);
+          monday.setHours(0, 0, 0, 0);
+
+          const sunday = new Date(monday);
+          sunday.setDate(monday.getDate() + 6);
+          sunday.setHours(23, 59, 59, 999);
+
+          return date >= monday && date <= sunday;
+        }
+
+        case 'month':
+          return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+
+        case 'year':
+          return date.getFullYear() === now.getFullYear();
+
+        default:
+          return true;
+      }
+    });
   }
 }

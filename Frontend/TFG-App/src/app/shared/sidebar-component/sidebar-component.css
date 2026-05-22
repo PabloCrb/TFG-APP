@@ -7,6 +7,11 @@
   --hover-bg: #f8fafd;
 }
 
+#notification-bell {
+  color: var(--accent-color);
+  cursor: pointer;
+}
+
 .sidebar {
   width: 260px;
   height: 95vh;
@@ -18,6 +23,7 @@
   position: fixed;
   left: 0;
   top: 0;
+  z-index: 1000;
 }
 
 /* Logo */

@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, EventEmitter, inject, Output } from '@angular/core';
-import { SidebarComponent } from '../../shared/sidebar-component/sidebar-component';
 import { BudgetCardComponent } from '../budget-card-component/budget-card-component';
 import { BudgetDashboardComponent } from '../budget-dashboard-component/budget-dashboard-component';
 import { BudgetService } from '../../services/budget-service';
@@ -15,7 +14,7 @@ import { FormatterService } from '../../services/shared/formatter-service';
 
 @Component({
   selector: 'app-budget-container-component',
-  imports: [SidebarComponent, BudgetCardComponent, BudgetDashboardComponent, CardCarrousel],
+  imports: [BudgetCardComponent, BudgetDashboardComponent, CardCarrousel],
   templateUrl: './budget-container-component.html',
   styleUrl: './budget-container-component.css',
 })
@@ -42,8 +41,6 @@ export class BudgetContainerComponent {
     let othersBudget: Budget | null = null;
 
     this.budgets = await this._budgetsService.getUserBudgets(cardID);
-
-    console.log(JSON.stringify(this.budgets));
 
     for (const budget of this.budgets) {
       if (budget.budget_id === null) {
