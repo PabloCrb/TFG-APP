@@ -5,14 +5,15 @@ import { API_URL } from '../constants';
   providedIn: 'root',
 })
 export class DashboardService {
-  async getSummary() {
+  async getSummary(cardID: number): Promise<any> {
     const token = localStorage.getItem('token');
     const response = await fetch(`${API_URL}/dashboard/getSummary`, {
-      method: 'GET',
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ cardID }),
     });
     const data = await response.json();
     if (data.ok) return data.data;

@@ -147,7 +147,7 @@ export class BudgetContainerComponent {
     if (!result) return;
     const selectedCardID = this._selectedCardService.getSelectedCard();
     if (!selectedCardID || selectedCardID === undefined) {
-      alert('Error al obtener la tarjeta seleccionada');
+      alert('Error al obtener la cuenta seleccionada');
       return;
     }
     result.card_id = selectedCardID;

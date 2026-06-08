@@ -1,7 +1,11 @@
+* {
+  box-sizing: border-box;
+}
+
 .login-container {
   display: flex;
+  width: 100vw;
   height: 100vh;
-  width: 100%;
 }
 
 .login-left {
@@ -9,6 +13,7 @@
   background-image: url('/images/bg_auth.jpg');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
 
 .login-right {
@@ -19,32 +24,52 @@
   align-items: center;
   padding: 2rem;
   background-color: #f9f9f9;
+  min-width: 420px;
+  height: 100vh;
+}
+
+.login-right {
+  background: #f9f9f9;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05);
 }
 
 .login-right h2 {
   margin-bottom: 2rem;
 }
 
-.login-btn {
-  margin-top: 1rem;
-  padding: 0.8rem 2rem;
-  font-size: 1rem;
-  cursor: pointer;
+.login-right app-form-template {
+  width: 100%;
+  max-width: 420px;
 }
 
-@media (max-width: 932px) {
+@media (max-width: 768px) {
   .login-container {
-    flex-direction: column;
+    position: relative;
+    height: 100vh;
+    width: 100vw;
   }
 
   .login-left {
-    height: 200px;
-    width: 100%;
+    position: absolute;
+    inset: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 0;
   }
 
   .login-right {
-    flex: unset;
-    width: 100%;
-    padding: 1rem;
+    min-width: 220px;
+    height: 60vh;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 420px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   }
 }

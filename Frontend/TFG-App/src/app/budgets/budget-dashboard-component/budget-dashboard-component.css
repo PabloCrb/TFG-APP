@@ -85,3 +85,26 @@
   font-size: 0.7em;
   color: #7f8c8d;
 }
+
+@media (max-width: 768px) {
+  .overall-container {
+    grid-template-columns: repeat(auto-fit, minmax(6em, 2fr));
+    gap: 40px;
+    margin: 0;
+  }
+
+  .overall-card {
+    width: 100%;
+    font-size: 0.9em;
+    margin: 0 6em 0 0;
+  }
+
+  .dashboard-header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .btn-primary {
+    margin-top: 2em;
+  }
+}

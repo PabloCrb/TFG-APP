@@ -30,8 +30,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  overflow: hidden;
-  max-height: 60px;
 }
 
 .card-header {

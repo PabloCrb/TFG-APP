@@ -3,6 +3,7 @@ import { DashboardService } from '../../services/dashboard.service';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { CardCarrousel } from '../../cards/card-carrousel/card-carrousel';
+import { SelectedCardService } from '../../services/shared/selected-card-service';
 
 @Component({
   selector: 'app-dashboard-container',
@@ -13,6 +14,7 @@ import { CardCarrousel } from '../../cards/card-carrousel/card-carrousel';
 export class DashboardContainer {
   _dashboardService = inject(DashboardService);
   _cdr = inject(ChangeDetectorRef);
+  _selectedCardService = inject(SelectedCardService);
 
   userSummary!: any;
   activeFilter = 'month';
@@ -94,7 +96,9 @@ export class DashboardContainer {
   };
 
   async ngOnInit(): Promise<void> {
-    this.userSummary = await this._dashboardService.getSummary();
+    const cardID = this._selectedCardService.getSelectedCard();
+    if (!cardID) return;
+    this.userSummary = await this._dashboardService.getSummary(cardID);
     if (!this.userSummary?.length) return;
     this.calculateTotals();
     this.buildChart();
@@ -116,7 +120,7 @@ export class DashboardContainer {
     const incomeData = this.userSummary.map((d: any) => d.total_income);
     const expensesData = this.userSummary.map((d: any) => d.total_expenses);
     const balanceData = this.userSummary.map((d: any) => d.balance);
-    const budgetLine = this.userSummary.map(() => 1500);
+    const budgetLine = this.userSummary.map((d: any) => d.total_budget);
 
     this.chartData = {
       labels,

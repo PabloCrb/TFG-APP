@@ -157,7 +157,9 @@ app.post("/auth/login", async (req, res) => {
   const results = await queryDB(sql, [usernameOrEmail, usernameOrEmail]);
 
   if (results.length === 0) {
-    return res.status(400).json({ message: "Usuario no encontrado" });
+    return res
+      .status(400)
+      .json({ message: "Usuario o contraseña incorrectos" });
   }
 
   const user = results[0];
@@ -165,7 +167,9 @@ app.post("/auth/login", async (req, res) => {
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    return res.status(400).json({ message: "Contraseña incorrecta" });
+    return res
+      .status(400)
+      .json({ message: "Usuario o contraseña incorrectos" });
   }
 
   const token = jwt.sign(
@@ -208,7 +212,7 @@ app.post("/transactions/createCard", verifyToken, async (req, res) => {
   const sql =
     "INSERT INTO cards (user_id, number, name, type, balance) VALUES (?, ?, ?, ?, ?)";
   await queryDB(sql, [userID, number, name, type, balance]);
-  res.status(200).json({ message: "Tarjeta creada con éxito" });
+  res.status(200).json({ message: "Cuenta creada con éxito" });
 });
 
 app.post("/transactions/getUserCards", verifyToken, async (req, res) => {
@@ -527,11 +531,22 @@ function shouldExecute(rt) {
   if (today < start) return false;
   if (end && today > end) return false;
   if (last && last > today) return false;
-
   if (last && last.getTime() === today.getTime()) return false;
 
   const nextExecution = getNextExecutionDate(rt);
+  const twoDaysBefore = new Date(nextExecution);
+  twoDaysBefore.setDate(twoDaysBefore.getDate() - 2);
+
+  if (today.getTime() === twoDaysBefore.getTime()) {
+    buildRecurringExpenseNotification(rt);
+    createNotification();
+  }
+
   return today >= nextExecution;
+}
+
+function buildRecurringExpenseNotification(rt) {
+  console.log(JSON.stringify(rt));
 }
 
 async function addRecurringTransaction(rt) {
@@ -816,31 +831,42 @@ app.post("/budgets/getTransactionsForBudget", verifyToken, async (req, res) => {
 
 //-----------------------DASHBOARD------------------
 
-app.get("/dashboard/getSummary", verifyToken, async (req, res) => {
+app.post("/dashboard/getSummary", verifyToken, async (req, res) => {
   try {
     const userID = req.user.id;
+    const cardID = req.body.cardID;
+
     const sql = `
       SELECT 
-        DATE_FORMAT(transaction_date, '%Y-%m') AS month,
-        
-        SUM(CASE 
-            WHEN amount > 0 THEN amount 
-            ELSE 0 
-        END) AS total_income,
+          DATE_FORMAT(t.transaction_date, '%Y-%m') AS month,
+          
+          SUM(CASE 
+              WHEN t.amount > 0 THEN t.amount 
+              ELSE 0 
+          END) AS total_income,
 
-        SUM(CASE 
-            WHEN amount < 0 THEN ABS(amount) 
-            ELSE 0 
-        END) AS total_expenses,
+          SUM(CASE 
+              WHEN t.amount < 0 THEN ABS(t.amount) 
+              ELSE 0 
+          END) AS total_expenses,
 
-        SUM(amount) AS balance
+          SUM(t.amount) AS balance,
 
-    FROM transactions
-    WHERE user_id = ? 
-    GROUP BY month
-    ORDER BY month;
+          (
+              SELECT SUM(b.amount)
+              FROM budgets b
+              WHERE b.user_id = t.user_id
+                AND b.card_id = t.card_id
+          ) AS total_budget
+
+      FROM transactions t
+      WHERE t.user_id = ?
+      AND t.card_id = ?
+
+      GROUP BY month
+      ORDER BY month;
   `;
-    const response = await queryDB(sql, [userID]);
+    const response = await queryDB(sql, [userID, cardID]);
     res.status(200).json({ ok: true, data: response });
   } catch (error) {
     res.status(500).json({ ok: false, data: JSON.stringify(error) });

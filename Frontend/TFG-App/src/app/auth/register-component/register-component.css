@@ -26,9 +26,10 @@
 
 #logo {
   border-radius: 100%;
-  width: 150px;
+  width: 200px;
   height: auto;
   margin-bottom: 20px;
+  box-shadow: 0px 0px 0px 4px rgba(105, 219, 253, 0.637);
 }
 
 .methodRegister-button,
@@ -117,4 +118,20 @@
   opacity: 1;
   bottom: unset;
   transition-duration: 0.3s;
+}
+
+@media (max-width: 768px) {
+  .methodRegister-container,
+  .emailRegister-container {
+    width: 70%;
+  }
+
+  #registerText {
+    font-size: 1.8rem;
+  }
+
+  .methodRegister-button,
+  .methodRegister-button-black {
+    width: 100%;
+  }
 }

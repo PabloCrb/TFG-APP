@@ -11,3 +11,15 @@
   border-radius: 0 0 12px 12px;
   gap: 10px;
 }
+
+@media (max-width: 768px) {
+  .main-container {
+    margin-left: 0;
+    padding: 1em;
+  }
+
+  .budgets-container {
+    display: flex;
+    flex-direction: column;
+  }
+}

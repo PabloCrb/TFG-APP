@@ -259,7 +259,7 @@ export class TransactionsComponent {
       {
         columns: [
           { key: 'description', label: 'Descripción', type: 'bold' },
-          { key: 'card_name', label: 'Tarjeta' },
+          { key: 'card_name', label: 'Cuenta' },
           { key: 'amount', label: 'Cantidad', type: 'currency' },
           { key: 'transaction_type_label', label: 'Categoría', type: 'badge' },
           { key: 'frequency_label', label: 'Frecuencia' },

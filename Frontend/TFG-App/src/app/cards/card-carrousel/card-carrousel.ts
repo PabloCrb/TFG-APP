@@ -36,7 +36,7 @@ export class CardCarrousel {
       this._selectedCardService.setSelectedCard(this.cards[0].card_id);
       this.cdr.detectChanges();
     } catch (err) {
-      console.error('Error al cargar tarjetas', err);
+      console.error('Error al cargar las cuentas', err);
     }
   }
 
@@ -71,28 +71,28 @@ export class CardCarrousel {
           name: 'name',
           label: 'Nombre',
           validators: ['required'],
-          errors: { required: 'El nombre de la tarjeta es obligatorio' },
+          errors: { required: 'El nombre de la cuenta es obligatorio' },
         },
         {
           type: 'text',
           name: 'type',
-          label: 'Tipo de tarjeta',
+          label: 'Tipo de cuenta',
           validators: ['required'],
-          errors: { required: 'El tipo de tarjeta es obligatorio' },
+          errors: { required: 'El tipo de cuenta es obligatorio' },
         },
         {
           type: 'text',
           name: 'number',
           label: 'Últimos 8 dígitos',
           validators: ['required'],
-          errors: { required: 'El número de tarjeta es obligatorio' },
+          errors: { required: 'El número de cuenta es obligatorio' },
         },
         {
           type: 'text',
           name: 'balance',
           label: 'Saldo actual',
           validators: ['required'],
-          errors: { required: 'El saldo de la tarjeta es obligatorio' },
+          errors: { required: 'El saldo de la cuenta es obligatorio' },
         },
       ],
       submitButtonText: 'Añadir Cuenta',
@@ -106,7 +106,7 @@ export class CardCarrousel {
 
   async createCard(cardData: any) {
     const response = await this._cardService.createCard(cardData);
-    if (!response.ok) alert('Error al crear la tarjeta: ' + response.data);
+    if (!response.ok) alert('Error al crear la cuenta: ' + response.data);
     const prevSelected = this._selectedCardService.getSelectedCard();
     await this.refreshCards();
     if (prevSelected) this.markAsSelected(prevSelected);
@@ -115,7 +115,7 @@ export class CardCarrousel {
   async getUserCards() {
     const response = await this._cardService.getUserCards();
     if (!response.ok) {
-      alert('Error al obtener las tarjetas del usuario:' + response.data);
+      alert('Error al obtener las cuentas del usuario:' + response.data);
       return [];
     }
     return response.data.cards;

@@ -18,6 +18,7 @@ export class SidebarComponent {
   open: boolean = false;
   notifications: any[] = [];
   unreadCount: number = 0;
+  isSidebarOpen = false;
 
   menuItems = [
     { value: 'transactions', label: 'Transacciones', active: true },
@@ -54,5 +55,9 @@ export class SidebarComponent {
     await this._notificationsService.markAsRead(notificationId);
     this.notifications = this.notifications.filter((n) => n.id !== notificationId);
     this.unreadCount = this.notifications.filter((n) => !n.read).length;
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 }

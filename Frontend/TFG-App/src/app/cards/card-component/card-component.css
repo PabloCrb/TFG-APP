@@ -84,7 +84,7 @@
 }
 
 /* ── Responsive ── */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .card-container {
     flex: 0 0 230px;
   }

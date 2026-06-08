@@ -310,10 +310,21 @@
   }
 }
 
-@media (max-width: 900px) {
-  #dashboard-container {
+@media (max-width: 768px) {
+  #main-container {
     margin-left: 0;
-    padding: 1.25rem;
+  }
+
+  #dashboard-container {
+    width: 90%;
+  }
+
+  .kpi-card {
+    width: 80%;
+  }
+
+  .chart-panel {
+    width: 85%;
   }
 
   .kpi-grid {

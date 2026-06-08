@@ -53,7 +53,7 @@ export class FuturePredictionReport {
 
     const currentMonth = new Date().getMonth();
     this.chartData = {
-      labels: prediction.map((p) => monthNames[(p.monthNumber + currentMonth + 1) % 12]),
+      labels: prediction.map((p) => monthNames[(p.monthNumber + currentMonth) % 12]),
       datasets: [
         {
           type: 'bar',

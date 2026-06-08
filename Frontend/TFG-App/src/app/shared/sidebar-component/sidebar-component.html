@@ -1,7 +1,14 @@
-<nav class="sidebar">
+<button class="hamburger" (click)="toggleSidebar()">☰</button>
+
+<div class="sidebar-overlay" *ngIf="isSidebarOpen" (click)="toggleSidebar()"></div>
+
+<nav class="sidebar" [class.open]="isSidebarOpen">
   <div class="logo">
     <div class="logo-icon"></div>
-    <h2 style="cursor: pointer" (click)="navigateToLogin()">Finanzas <span>TFG</span></h2>
+    <h2 style="cursor: pointer" (click)="navigateToLogin()">
+      <span>Prisma</span>
+    </h2>
+
     <app-notification
       [notifications]="notifications"
       [unreadCount]="unreadCount"

@@ -1,23 +1,5 @@
 @if (report?.data) {
   <div class="report-container">
-    <!-- 💰 TOTALES -->
-    <div class="totals">
-      <div class="card income">
-        <h3>💰 Ingresos</h3>
-        <p>{{ totalIncome }} €</p>
-      </div>
-
-      <div class="card expenses">
-        <h3>💸 Gastos</h3>
-        <p>{{ totalExpenses }} €</p>
-      </div>
-
-      <div class="card balance" [ngClass]="totals.balance >= 0 ? 'positive' : 'negative'">
-        <h3>📊 Balance</h3>
-        <p>{{ totals.balance }} €</p>
-      </div>
-    </div>
-
     <!-- 📊 GRÁFICA GASTOS -->
     @if (expensesChartData) {
       <div class="chart-container">

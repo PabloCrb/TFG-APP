@@ -74,11 +74,11 @@ export class RegisterComponent {
   private handleSignUpResponse(response: { ok: boolean; data: any }) {
     if (!response.ok) {
       if (response.data.message.includes('usuario')) {
-        this.form.get('username')?.setErrors({ server: response.data.message });
+        alert(response.data.message);
       }
 
       if (response.data.message.includes('email')) {
-        this.form.get('email')?.setErrors({ server: response.data.message });
+        alert(response.data.message);
       }
     } else {
       alert('Usuario creado con éxito');

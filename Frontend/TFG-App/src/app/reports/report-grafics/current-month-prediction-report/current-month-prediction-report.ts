@@ -94,7 +94,7 @@ export class CurrentMonthPredictionReport implements OnChanges {
         {
           label: 'Forecast (€)',
           data: sorted.map((c) => Number(c.forecast || 0)),
-          backgroundColor: '#66bb6a',
+          backgroundColor: '#009e08',
         },
       ],
     };
